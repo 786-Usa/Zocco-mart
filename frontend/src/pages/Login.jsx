@@ -1,20 +1,37 @@
-import React, { useState } from 'react'
-import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useState } from "react";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const Login = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [showPassword, setShowPassword] = useState(false)
-  const [rememberMe, setRememberMe] = useState(false)
-  const navigate = useNavigate()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
-    e.preventDefault()
+  const handleLogin = async (e) => {
+    e.preventDefault();
     // TODO: Add authentication logic here
-    console.log('Login attempt:', { email, password, rememberMe })
-        navigate('/')
-  }
+    try {
+      const { data } = await axios.post(
+        "http://localhost:8000/api/v1/login",
+        { email, password },
+        { withCredentials: true },
+      );
+      if (data.success) {
+        toast.success(data.message);
+        navigate("/");
+      } else {
+        console.error(data.message || "Login failed");
+        toast.error(data.message || "Login failed");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      toast.error("An error occurred during login");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center py-12 px-4">
@@ -28,7 +45,10 @@ const Login = () => {
         <form onSubmit={handleLogin} className="space-y-6">
           {/* Email Field */}
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-600 mb-2">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-600 mb-2"
+            >
               Email address
             </label>
             <input
@@ -44,12 +64,15 @@ const Login = () => {
 
           {/* Password Field */}
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-600 mb-2">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-600 mb-2"
+            >
               Password
             </label>
             <div className="relative">
               <input
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -81,11 +104,17 @@ const Login = () => {
                 onChange={(e) => setRememberMe(e.target.checked)}
                 className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
               />
-              <label htmlFor="remember" className="ml-2 text-sm text-gray-600 cursor-pointer">
+              <label
+                htmlFor="remember"
+                className="ml-2 text-sm text-gray-600 cursor-pointer"
+              >
                 Remember me
               </label>
             </div>
-            <a href="#" className="text-sm text-blue-600 hover:text-blue-700 font-medium">
+            <a
+              href="#"
+              className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+            >
               Forgot your password?
             </a>
           </div>
@@ -101,14 +130,17 @@ const Login = () => {
 
         {/* Sign Up Link */}
         <p className="text-center text-gray-600 mt-6">
-          Not have any account?{' '}
-          <Link to="/signup" className="text-blue-600 hover:text-blue-700 font-semibold">
+          Not have any account?{" "}
+          <Link
+            to="/signup"
+            className="text-blue-600 hover:text-blue-700 font-semibold"
+          >
             Sign Up
           </Link>
         </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

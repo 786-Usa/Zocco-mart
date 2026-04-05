@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 
 const userSchema = new mongoose.Schema(
   {
@@ -21,7 +21,6 @@ const userSchema = new mongoose.Schema(
     },
     phoneNumber: {
       type: Number,
-      default: "user",
     },
     addresses: [
       {
@@ -60,14 +59,14 @@ const userSchema = new mongoose.Schema(
 
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
-    next();
+   return next();
   }
   this.password = await bcrypt.hash(this.password, 10);
 });
 
 userSchema.methods.getJWTToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRE,
+    expiresIn: process.env.JWT_EXPIRE || "7d",
   });
 };
 
