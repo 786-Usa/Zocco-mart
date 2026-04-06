@@ -6,6 +6,7 @@ import {
   getUserProfile,
   updatePassword,
   updateProfile,
+  activateUser,
 } from "../controllers/userController.js";
 import isAuthenticatedUser from "../middleware/auth.js";
 import upload from "../middleware/multer.js";
@@ -13,6 +14,7 @@ import upload from "../middleware/multer.js";
 const userRouter = express.Router();
 
 userRouter.post("/register", upload.single("avatar"), registerUser);
+userRouter.post("/activate", activateUser);
 userRouter.post("/login", loginUser);
 userRouter.get("/logout", logoutUser);
 

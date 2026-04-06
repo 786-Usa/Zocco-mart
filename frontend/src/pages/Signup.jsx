@@ -51,8 +51,7 @@ const Signup = () => {
         },
       );
       if (data.success) {
-        toast.success("Registration successful! Please log in.");
-        navigate("/login");
+        toast.success("Registration successful! Please log in."); 
       } else {
         console.error(data.message || "Registration failed.");
         toast.error(data.message || "Registration failed. Please try again.");

@@ -2,8 +2,9 @@ import User from "../models/userModel.js";
 import fs from "fs";
 import ErrorHandler from "../utils/ErrorHandler.js";
 import catchAsyncError from "../middleware/catchAsyncError.js";
-
-
+import sendMail from "../utils/sendMail.js";
+import jwt from "jsonwebtoken";
+import nodemailer from "nodemailer";
 // ================= REGISTER USER =================
 const registerUser = catchAsyncError(async (req, res, next) => {
   const { name, email, password, phoneNumber } = req.body;
@@ -11,12 +12,6 @@ const registerUser = catchAsyncError(async (req, res, next) => {
   const isUserExists = await User.findOne({ email });
 
   if (isUserExists) {
-    if (req.file) {
-      fs.unlink(req.file.path, (err) => {
-        if (err) console.error("Error deleting file:", err);
-      });
-    }
-
     return next(new ErrorHandler("User already exists", 400));
   }
 
@@ -29,7 +24,9 @@ const registerUser = catchAsyncError(async (req, res, next) => {
     };
   }
 
-  const user = await User.create({
+  // ✅ DO NOT CREATE USER HERE
+
+  const activationToken = ActivationToken({
     name,
     email,
     password,
@@ -37,10 +34,63 @@ const registerUser = catchAsyncError(async (req, res, next) => {
     avatar,
   });
 
-  sendToken(user, 201, res);
+  const activationUrl = `${process.env.FRONTEND_URL}/activate/${activationToken}`;
+
+  await sendMail({
+    email,
+    subject: "Activate Your Account",
+    message: `Click to activate: ${activationUrl}`,
+  });
+
+  res.status(200).json({
+    success: true,
+    message: `Check your email ${email}`,
+  });
 });
 
-export default registerUser;
+const activateUser = catchAsyncError(async (req, res, next) => {
+  const { activationToken } = req.body;
+
+  const newUserData = jwt.verify(
+    activationToken,
+    process.env.ACTIVATION_TOKEN_SECRET
+  );
+
+  const { email } = newUserData;
+
+  const user = await User.findOne({ email });
+
+  if (user) {
+    return next(new ErrorHandler("User already exists", 400));
+  }
+
+  const createdUser = await User.create(newUserData);
+
+  sendToken(createdUser, 201, res);
+});
+const sendToken = (user, statusCode, res) => {
+  const token = user.getJWTToken();
+
+  const cookieExpireDays = Number(process.env.COOKIE_EXPIRE) || 7;
+
+  const options = {
+    expires: new Date(Date.now() + cookieExpireDays * 24 * 60 * 60 * 1000),
+    httpOnly: true,
+  };
+
+  res.status(statusCode).cookie("token", token, options).json({
+    success: true,
+    user,
+    token,
+  });
+};
+
+const ActivationToken = (payload) => {
+  return jwt.sign(payload, process.env.ACTIVATION_TOKEN_SECRET, {
+    expiresIn: process.env.ACTIVATION_TOKEN_EXPIRES_IN,
+  });
+};
+
 
 // ================= LOGIN USER =================
 const loginUser = catchAsyncError(async (req, res, next) => {
@@ -130,22 +180,6 @@ const updateProfile = catchAsyncError(async (req, res, next) => {
 });
 
 // ================= HELPER: SEND TOKEN =================
-const sendToken = (user, statusCode, res) => {
-  const token = user.getJWTToken();
-
-  const cookieExpireDays = Number(process.env.COOKIE_EXPIRE) || 7;
-
-  const options = {
-    expires: new Date(Date.now() + cookieExpireDays * 24 * 60 * 60 * 1000),
-    httpOnly: true,
-  };
-
-  res.status(statusCode).cookie("token", token, options).json({
-    success: true,
-    user,
-    token,
-  });
-};
 
 export {
   registerUser,
@@ -155,4 +189,5 @@ export {
   updatePassword,
   updateProfile,
   sendToken,
+  activateUser,
 };
