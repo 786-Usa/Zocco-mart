@@ -2,7 +2,7 @@ export const productData = [
   {
     id: 1,
     category: "Computers and Laptop",
-    name: "MacBook pro M2 chipset 256gb ssd 8gb ram...",
+    name: "MacBook pro M2 chipset 256gb ssd 8gb ram.",
     description: "The new MacBook Pro delivers game-changing performance for pro users. With the powerful M2, experience phenomenal battery life. The brilliant 13.3-inch Retina display makes everything look vibrant and sharp. And with its silent, fanless design, MacBook Pro is completely silent — even when it’s working hard. Whether you’re creating a presentation, editing a video, or just browsing the web, MacBook Pro is built to handle it all.",
     image_Url: [{ url: "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" }],
     shop: { name: "Apple inc.", ratings: 5 },
@@ -15,7 +15,7 @@ export const productData = [
   {
     id: 2,
     category: "Mobile and Tablets",
-    name: "Iphone 14 pro max 256 gb ssd and 8 gb ra...",
+    name: "Iphone 14 pro max 256 gb ssd and 8 gb ra.",
     description: "iPhone 14 Pro Max. Capture incredible detail with a 48MP Main camera. Experience iPhone in a whole new way.",
     image_Url: [{ url: "https://m.media-amazon.com/images/I/71yzJoE7WlL._AC_SL1500_.jpg" }],
     shop: { name: "Amazon Ltd", ratings: 4.5 },
@@ -28,7 +28,7 @@ export const productData = [
   {
     id: 3,
     category: "Music and Gaming",
-    name: "New Fashionable Watch for men 2023 with ...",
+    name: "New Fashionable Watch for men 2023 with .",
     description: "A stylish, minimalist watch for everyday wear. Features a genuine leather strap and water resistance.",
     image_Url: [{ url: "https://images.unsplash.com/photo-1766518303334-aaa928ceed45?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" }],
     shop: { name: "Shahriar Watch House", ratings: 4 },

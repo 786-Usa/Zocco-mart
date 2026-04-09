@@ -1,13 +1,44 @@
 import React from "react";
+import apple from "../../assets/Logos/apple.svg";
+import nike from "../../assets/Logos/nike.svg";
+import amazon from "../../assets/Logos/amazon.svg";
+import adidas from "../../assets/Logos/adidas.svg";
+import samsung from "../../assets/Logos/samsung.svg";
+import sony from "../../assets/Logos/sony.svg";
+import puma from "../../assets/Logos/puma.svg";
+import dell from "../../assets/Logos/dell.svg";
+import hp from "../../assets/Logos/hp.svg";
+import lenovo from "../../assets/Logos/lenovo.svg";
+import microsoft from "../../assets/Logos/microsoft.svg";
+import asus from "../../assets/Logos/asus.svg";
+import google from "../../assets/Logos/google.svg";
+import intel from "../../assets/Logos/intel.svg";
+import zara from "../../assets/Logos/zara.svg";
+import hm from "../../assets/Logos/handm.svg";
+import uniqlo from "../../assets/Logos/uniqlo.svg";
+import gucci from "../../assets/Logos/gucci.svg";
+import louisvuitton from "../../assets/Logos/louis-vuitton.svg";
 
 const brands = [
-  { name: "Apple", logo: "https://cdn-icons-png.flaticon.com/512/0/747.png" },
-  { name: "Nike", logo: "https://cdn-icons-png.flaticon.com/512/732/732084.png" },
-  { name: "Amazon", logo: "https://cdn-icons-png.flaticon.com/512/5968/5968870.png" },
-  { name: "Adidas", logo: "https://cdn-icons-png.flaticon.com/512/5968/5968852.png" },
-  { name: "Samsung", logo: "https://cdn-icons-png.flaticon.com/512/882/882704.png" },
-  { name: "Sony", logo: "https://cdn-icons-png.flaticon.com/512/5969/5969346.png" },
-  { name: "Puma", logo: "https://cdn-icons-png.flaticon.com/512/732/732084.png" },
+  { name: "Apple", logo: apple },
+  { name: "Nike", logo: nike },
+  { name: "Amazon", logo: amazon },
+  { name: "Adidas", logo: adidas },
+  { name: "Samsung", logo: samsung },
+  { name: "Sony", logo: sony },
+  { name: "Puma", logo: puma },
+  { name: "Dell", logo: dell },
+  { name: "HP", logo: hp },
+  { name: "Lenovo", logo: lenovo },
+  { name: "Microsoft", logo: microsoft },
+  { name: "Asus", logo: asus },
+  { name: "Google", logo: google },
+  { name: "Intel", logo: intel },
+  { name: "Zara", logo: zara },
+  { name: "H&M", logo: hm },
+  { name: "Uniqlo", logo: uniqlo },
+  { name: "Gucci", logo: gucci },
+  { name: "Louis Vuitton", logo: louisvuitton },
 ];
 
 // Duplicate for seamless loop
@@ -15,7 +46,7 @@ const loopBrands = [...brands, ...brands];
 
 const TrustedBrands = () => {
   return (
-    <section className="py-16 bg-white overflow-hidden mb-5">
+    <section className="py-16 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4">
 
         {/* HEADER */}
