@@ -7,7 +7,7 @@ const BestSelling = () => {
   // Sort by total sold (best selling logic)
   const bestProducts = [...productData]
     .sort((a, b) => b.total_sell - a.total_sell)
-    .slice(0, 10);
+    .slice(0, 8); // Show top 8 best sellers
 
   return (
     <section className="py-12 bg-gradient-to-b from-white to-gray-50">

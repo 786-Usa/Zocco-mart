@@ -152,7 +152,7 @@ const Header = () => {
 
           {/* LINKS */}
           <nav className="hidden lg:flex items-center gap-8 ml-8 text-sm font-medium">
-            {["Home", "Best Selling", "productData", "Events", "FAQ"].map(
+            {["Home", "Best Selling", "Products", "Events", "FAQ"].map(
               (item, i) => (
                 <a
                   key={i}
@@ -209,7 +209,7 @@ const Header = () => {
         <h2 className="text-lg font-semibold mb-6">Menu</h2>
 
         <nav className="flex flex-col gap-4 text-sm">
-          {["Home", "Best Selling", "productData", "Events", "FAQ"].map(
+          {["Home", "Best Selling", "Products", "Events", "FAQ"].map(
             (item, i) => (
               <a key={i} href={`/${item.toLowerCase()}`} className="hover:text-orange-500 transition">
                 {item}

@@ -11,6 +11,8 @@ import Cart from "./pages/CartPage";
 import Events from "./pages/EventsPage";
 import FAQ from "./pages/FAQ";
 import MyProfile from "./pages/MyProfile";
+import ProductsPage from "./pages/ProductsPage";
+import DetailProductPage from "./pages/DetailProductPage";
 function App() {
   return (
     <>
@@ -26,6 +28,12 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/events" element={<Events />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route
+            path="/products"
+            element={<Navigate to="/products/all" replace />}
+          />
+          <Route path="/products/all" element={<ProductsPage />} />
+          <Route path="/product/:id" element={<DetailProductPage />} />
           <Route path="/my-profile" element={<MyProfile />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />

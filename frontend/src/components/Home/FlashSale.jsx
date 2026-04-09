@@ -6,7 +6,7 @@ const FlashSale = () => {
   // simulate flash sale (high discount)
   const flashProducts = productData
     .filter((p) => p.price > p.discount_price)
-    .slice(0, 8);
+    .slice(0, 5);
 
   return (
     <section className="py-12 bg-gradient-to-r from-orange-50 to-white">
