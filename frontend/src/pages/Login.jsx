@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import axios from "axios";
+import { useLoginUserMutation } from "../features/api/apiSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -10,28 +10,35 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
+  const [login , {isLoading, isError, isSuccess}] = useLoginUserMutation();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     // TODO: Add authentication logic here
-    try {
-      const { data } = await axios.post(
-        "http://localhost:8000/api/v1/login",
-        { email, password },
-        { withCredentials: true },
-      );
-      if (data.success) {
-        toast.success(data.message);
-        navigate("/");
-      } else {
-        console.error(data.message || "Login failed");
-        toast.error(data.message || "Login failed");
-      }
-    } catch (error) {
-      console.error("Login error:", error);
-      toast.error("An error occurred during login");
+    const res = await login({email, password});
+
+    if (res.error) {
+      toast.error(res.error.data.message || "Login failed");
+    } else {
+      toast.success("Login successful");
+      navigate("/");
     }
+   
   };
+
+  if (isLoading) {
+    // Show loading state
+    return <p className="flex align-middle items-center">Loading...</p>;
+  }
+  if (isError) {
+    // Show error state
+    return <p className="flex align-middle items-center">Error logging in. Please try again.</p>;
+  }
+  if (isSuccess) {
+    // Show success state
+    return <p className="flex align-middle items-center">Login successful. Redirecting...</p>;
+  }
+
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center py-12 px-4">

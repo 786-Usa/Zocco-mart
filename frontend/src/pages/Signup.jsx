@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { MdAccountCircle } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import axios from "axios";
+import { useRegisterMutation } from "../features/api/apiSlice";
 
 const Signup = () => {
   const [fullName, setFullName] = useState("");
@@ -12,7 +12,7 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [profilePicture, setProfilePicture] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
-  const navigate = useNavigate();
+  const [signup, { isLoading, isError, isSuccess }] = useRegisterMutation();
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
@@ -28,40 +28,26 @@ const Signup = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-
+    const formData = new FormData();
+    formData.append("name", fullName);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("avatar", profilePicture);
     try {
-      const formData = new FormData();
-
-      formData.append("name", fullName);
-      formData.append("email", email);
-      formData.append("password", password);
-
-      if (profilePicture) {
-        formData.append("avatar", profilePicture);
-      }
-
-      const { data } = await axios.post(
-        "http://localhost:8000/api/v1/register",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          withCredentials: true,
-        },
-      );
-      if (data.success) {
-        toast.success("Registration successful! Please log in."); 
-      } else {
-        console.error(data.message || "Registration failed.");
-        toast.error(data.message || "Registration failed. Please try again.");
-      }
+      const res = await signup(formData).unwrap();
+      toast.success(res.message || "Signup successful");
     } catch (error) {
-      const message = error.response?.data?.message || "Something went wrong";
-      console.error(message);
-      toast.error(message);
+      console.error("Signup error:", error);
+      toast.error(error?.data?.message || "Signup failed");
     }
   };
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+  if (isError) {
+    return <p>Error signing up. Please try again.</p>;
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center py-12 px-4">

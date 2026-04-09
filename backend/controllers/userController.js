@@ -7,8 +7,8 @@ import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 // ================= REGISTER USER =================
 const registerUser = catchAsyncError(async (req, res, next) => {
-  const { name, email, password, phoneNumber } = req.body;
-
+  const { name, email, password, phoneNumber = "" } = req.body;
+  
   const isUserExists = await User.findOne({ email });
 
   if (isUserExists) {
@@ -53,7 +53,7 @@ const activateUser = catchAsyncError(async (req, res, next) => {
 
   const newUserData = jwt.verify(
     activationToken,
-    process.env.ACTIVATION_TOKEN_SECRET
+    process.env.ACTIVATION_TOKEN_SECRET,
   );
 
   const { email } = newUserData;
@@ -76,6 +76,8 @@ const sendToken = (user, statusCode, res) => {
   const options = {
     expires: new Date(Date.now() + cookieExpireDays * 24 * 60 * 60 * 1000),
     httpOnly: true,
+    secure: false,
+    sameSite: "lax",
   };
 
   res.status(statusCode).cookie("token", token, options).json({
@@ -90,7 +92,6 @@ const ActivationToken = (payload) => {
     expiresIn: process.env.ACTIVATION_TOKEN_EXPIRES_IN,
   });
 };
-
 
 // ================= LOGIN USER =================
 const loginUser = catchAsyncError(async (req, res, next) => {
@@ -115,6 +116,23 @@ const loginUser = catchAsyncError(async (req, res, next) => {
   }
 
   sendToken(user, 200, res);
+});
+
+const getUser = catchAsyncError(async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+      return next(new ErrorHandler("User not found", 404));
+    }
+
+    res.status(200).json({
+      success: true,
+      user,
+    });
+  } catch (error) {
+    return next(new ErrorHandler("Error fetching user", 500));
+  }
 });
 
 // ================= LOGOUT USER =================
@@ -190,4 +208,5 @@ export {
   updateProfile,
   sendToken,
   activateUser,
+  getUser,
 };
