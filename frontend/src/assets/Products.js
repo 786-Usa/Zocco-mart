@@ -3,7 +3,7 @@ export const productData = [
     id: 1,
     category: "Computers and Laptop",
     name: "MacBook pro M2 chipset 256gb ssd 8gb ram...",
-    description: "The new MacBook Pro delivers game-changing performance for pro users. With the powerful M2, experience phenomenal battery life.",
+    description: "The new MacBook Pro delivers game-changing performance for pro users. With the powerful M2, experience phenomenal battery life. The brilliant 13.3-inch Retina display makes everything look vibrant and sharp. And with its silent, fanless design, MacBook Pro is completely silent — even when it’s working hard. Whether you’re creating a presentation, editing a video, or just browsing the web, MacBook Pro is built to handle it all.",
     image_Url: [{ url: "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" }],
     shop: { name: "Apple inc.", ratings: 5 },
     price: 1099,
