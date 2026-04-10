@@ -13,11 +13,17 @@ import FAQ from "./pages/FAQ";
 import MyProfile from "./pages/MyProfile";
 import ProductsPage from "./pages/ProductsPage";
 import DetailProductPage from "./pages/DetailProductPage";
+import BestSelling from "./components/Home/BestSelling";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Newsletter from "./components/Home/Newsletter";
 function App() {
   return (
     <>
       <div>
         <ToastContainer />
+        {/* header and footer would go here (if we had them) */}
+        <Header />
 
         <Routes>
           {/* Flat structure: All Routes are siblings */}
@@ -34,15 +40,18 @@ function App() {
           />
           <Route path="/products/all" element={<ProductsPage />} />
           <Route path="/product/:id" element={<DetailProductPage />} />
+          <Route path="/best-selling" element={<BestSelling />} />
           <Route path="/my-profile" element={<MyProfile />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route
             path="/activate/:activationToken"
             element={<ActivationPage />}
-          />
+            />
           <Route path="/wishlist" element={<Wishlist />} />
         </Routes>
+        <Newsletter/>
+            <Footer/>
       </div>
     </>
   );

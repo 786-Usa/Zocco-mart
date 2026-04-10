@@ -1,6 +1,5 @@
 import React from "react";
 import ProductCard from "../components/ProductCard";
-import Header from "../components/Header";
 
 // import { ShoppingCart, Trash2, Eye, Star } from "lucide-react";
 
@@ -128,7 +127,6 @@ const Wishlist = () => {
 
   return (
     <>
-    <Header/>
       <div className="min-h-screen bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Wishlist Header */}

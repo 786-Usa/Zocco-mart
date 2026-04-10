@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { faqsContent } from "../components/content/FAQ'sContent";
-import Header from "../components/Header";
 
 const FAQ = () => {
   const [openItem, setOpenItem] = useState(2);
@@ -11,7 +10,6 @@ const FAQ = () => {
 
   return (
     <>
-      <Header />
       <section className="w-full min-h-screen bg-slate-100/80 py-14 sm:py-16 text-black">
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">

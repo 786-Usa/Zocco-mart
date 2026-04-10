@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Header from "../components/Header";
 import ProductCard from "../components/ProductCard";
 import { productData } from "../assets/Products";
 
@@ -40,13 +39,11 @@ const ProductsPage = () => {
 
   return (
     <>
-      <Header />
+
 
       <div className="max-w-7xl mx-auto px-4 py-10">
-
         {/* TOP BAR */}
         <div className="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-8">
-
           <div>
             <h1 className="text-2xl font-semibold text-gray-900">
               Explore Products
@@ -72,14 +69,10 @@ const ProductsPage = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-
           {/* SIDEBAR */}
           <aside className="lg:col-span-1">
             <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm sticky top-24 space-y-6">
-
-              <h2 className="text-lg font-semibold text-gray-900">
-                Filters
-              </h2>
+              <h2 className="text-lg font-semibold text-gray-900">Filters</h2>
 
               {/* CATEGORY */}
               <div>
@@ -148,9 +141,7 @@ const ProductsPage = () => {
 
               {/* STOCK */}
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-700">
-                  In Stock Only
-                </span>
+                <span className="text-sm text-gray-700">In Stock Only</span>
                 <input
                   type="checkbox"
                   checked={filters.inStock}

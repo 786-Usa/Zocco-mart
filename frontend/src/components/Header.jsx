@@ -21,7 +21,7 @@ const Header = () => {
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
     const filteredproductData = productData.filter((p) =>
-      p.title.toLowerCase().includes(e.target.value.toLowerCase())
+      p.title.toLowerCase().includes(e.target.value.toLowerCase()),
     );
     setSearchResults(filteredproductData);
   };
@@ -36,17 +36,22 @@ const Header = () => {
     "Mobiles & Tablets",
     "Groceries",
   ];
+  const navLinks = [
+    { name: "Home", path: "/home" },
+    { name: "Best Selling", path: "/best-selling" },
+    { name: "Products", path: "/products" },
+    { name: "Events", path: "/events" },
+    { name: "FAQ", path: "/faq" },
+  ];
 
-    useEffect(() => {
-  document.body.style.overflow = isMobileMenuOpen ? "hidden" : "auto";
-}, [isMobileMenuOpen]);
+  useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "auto";
+  }, [isMobileMenuOpen]);
 
   return (
     <header className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border-b border-gray-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
-
       {/* TOP */}
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between gap-6">
-
         {/* LOGO */}
         <div className="flex items-center gap-3 cursor-pointer">
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-orange-500 to-yellow-400 flex items-center justify-center shadow-md">
@@ -95,7 +100,6 @@ const Header = () => {
 
         {/* RIGHT */}
         <div className="flex items-center gap-3">
-
           {/* Seller */}
           <button className="hidden sm:flex items-center gap-2 px-4 h-10 rounded-xl bg-gray-900 text-white text-sm font-medium hover:bg-black transition shadow-sm">
             Become Seller
@@ -119,7 +123,6 @@ const Header = () => {
       {/* NAVBAR */}
       <div className="bg-gradient-to-r from-gray-900 to-gray-800 text-white">
         <div className="max-w-7xl mx-auto px-4 h-14 flex items-center">
-
           {/* Categories */}
           <div className="relative">
             <button
@@ -152,23 +155,20 @@ const Header = () => {
 
           {/* LINKS */}
           <nav className="hidden lg:flex items-center gap-8 ml-8 text-sm font-medium">
-            {["Home", "Best Selling", "Products", "Events", "FAQ"].map(
-              (item, i) => (
-                <a
-                  key={i}
-                  href={`/${item.toLowerCase()}`}
-                  className="relative group text-gray-300 hover:text-white transition"
-                >
-                  {item}
-                  <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-orange-400 group-hover:w-full transition-all"></span>
-                </a>
-              )
-            )}
+            {navLinks.map((item, i) => (
+              <Link
+                key={i}
+                to={item.path}
+                className="relative group text-gray-300 hover:text-white transition"
+              >
+                {item.name}
+                <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-orange-400 group-hover:w-full transition-all"></span>
+              </Link>
+            ))}
           </nav>
 
           {/* ICONS */}
           <div className="flex items-center gap-5 ml-auto">
-
             <Link to="/wishlist" className="relative group">
               <Heart className="w-5 h-5 text-gray-300 group-hover:text-red-400 transition" />
               <span className="absolute -top-2 -right-2 bg-red-500 text-[10px] w-4 h-4 flex items-center justify-center rounded-full">
@@ -191,36 +191,39 @@ const Header = () => {
       </div>
 
       {/* MOBILE DRAWER */}
-    {isMobileMenuOpen &&
-  createPortal(
-    <div
-      className="fixed inset-0 bg-black/60 z-[9999] backdrop-blur-sm "
-      onClick={() => setIsMobileMenuOpen(false)}
-    >
-      <div
-        className="bg-white w-72 h-full p-6 shadow-2xl animate-slideIn"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <X
-          className="absolute top-5 right-5 w-5 h-5 cursor-pointer"
-          onClick={() => setIsMobileMenuOpen(false)}
-        />
+      {isMobileMenuOpen &&
+        createPortal(
+          <div
+            className="fixed inset-0 bg-black/60 z-[9999] backdrop-blur-sm "
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <div
+              className="bg-white w-72 h-full p-6 shadow-2xl animate-slideIn"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <X
+                className="absolute top-5 right-5 w-5 h-5 cursor-pointer"
+                onClick={() => setIsMobileMenuOpen(false)}
+              />
 
-        <h2 className="text-lg font-semibold mb-6">Menu</h2>
+              <h2 className="text-lg font-semibold mb-6">Menu</h2>
 
-        <nav className="flex flex-col gap-4 text-sm">
-          {["Home", "Best Selling", "Products", "Events", "FAQ"].map(
-            (item, i) => (
-              <a key={i} href={`/${item.toLowerCase()}`} className="hover:text-orange-500 transition">
-                {item}
-              </a>
-            )
-          )}
-        </nav>
-      </div>
-    </div>,
-    document.body
-  )}
+              <nav className="hidden lg:flex items-center gap-8 ml-8 text-sm font-medium">
+                {navLinks.map((item, i) => (
+                  <Link
+                    key={i}
+                    to={item.path}
+                    className="relative group text-gray-300 hover:text-white transition"
+                  >
+                    {item.name}
+                    <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-orange-400 group-hover:w-full transition-all"></span>
+                  </Link>
+                ))}
+              </nav>
+            </div>
+          </div>,
+          document.body,
+        )}
     </header>
   );
 };

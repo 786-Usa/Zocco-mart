@@ -1,14 +1,12 @@
 import React from "react";
 import { productData } from "../assets/Products";
 import EventCard from "../components/EventCard";
-import Header from "../components/Header";
 
 const Events = () => {
   const eventProduct = productData?.[1] || productData?.[0] || {};
 
   return (
     <>
-   <Header/>
     <section className="relative w-full min-h-screen overflow-hidden bg-linear-to-b from-slate-50 via-slate-100 to-slate-200/70 py-12 sm:py-14 lg:py-16">
       <div className="pointer-events-none absolute -top-12 -left-12 h-52 w-52 rounded-full bg-rose-100/70 blur-3xl" />
       <div className="pointer-events-none absolute bottom-0 right-0 h-72 w-72 rounded-full bg-sky-100/70 blur-3xl" />

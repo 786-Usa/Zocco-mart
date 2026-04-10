@@ -1,6 +1,5 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import Header from "../components/Header";
 import { productData } from "../assets/Products";
 
 const DetailProductPage = () => {
@@ -12,7 +11,6 @@ const DetailProductPage = () => {
 
   return (
     <>
-      <Header />
 
       <div className="max-w-7xl mx-auto px-4 py-10">
 

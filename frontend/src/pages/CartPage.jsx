@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../components/Header";
 import { Trash2 } from "lucide-react";
 
 const Cart = () => {
@@ -45,7 +44,6 @@ const Cart = () => {
 
   return (
     <>
-      <Header />
 
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Top */}
